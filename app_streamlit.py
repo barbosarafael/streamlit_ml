@@ -3,12 +3,13 @@ import pandas as pd
 import numpy as np
 from PIL import Image
 
+
+
 st.set_page_config(
-        page_title = "Hello world",
+        page_title = "Dashboard",
         page_icon = "chart_with_upwards_trend",
         layout="wide"
     )
-
 
 # Sidebar
 
@@ -77,7 +78,26 @@ if page == 'Considerações iniciais':
 
 elif page == "Big Numbers":
 
+
+    @st.cache(show_spinner=False)
+    def load_data_order():
+
+        data_order = pd.read_csv("raw_data/olist_orders_dataset.csv")
+
+        return data_order
+
+    data1 = load_data_order()   
+
+
     st.header("Em construção")
+
+    total_order_id = data1['order_id'].drop_duplicates().shape[0]
+    total_customer_id = data1['customer_id'].drop_duplicates().shape[0]
+
+    col1, col2 = st.columns(2)
+    col1.metric(label = "Total de pedidos", value = total_order_id, delta="1.2 °F")
+    col2.metric(label = "Total de customers", value = total_customer_id, delta = "-8%")
+
 
 elif page == "Indicadores a nível Seller":
 
