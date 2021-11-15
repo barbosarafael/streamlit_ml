@@ -8,7 +8,7 @@ from PIL import Image
 st.set_page_config(
         page_title = "Dashboard",
         page_icon = "chart_with_upwards_trend",
-        layout="wide"
+        layout = "wide"
     )
 
 # Sidebar
@@ -28,6 +28,60 @@ Github: [barbosarafael](https://github.com/barbosarafael)
 LinkedIn: [Rafael Barbosa](https://www.linkedin.com/in/rafael-barbosa0/)
 
 """)
+
+
+@st.cache(show_spinner=False)
+
+def load_data_order():
+
+    data_order = pd.read_csv("raw_data/olist_orders_dataset.csv")
+
+    return data_order
+
+@st.cache(show_spinner=False)
+
+def load_data_customers():
+
+    data_order_customer = pd.read_csv("raw_data/olist_customers_dataset.csv")
+
+    return data_order_customer  
+
+def load_data_geolocation():
+
+    data_geolocation = pd.read_csv("raw_data/olist_geolocation_dataset.csv")
+
+    return data_geolocation    
+
+def load_data_order():
+
+    data_order = pd.read_csv("raw_data/olist_orders_dataset.csv")
+
+    return data_order    
+
+def load_data_order():
+
+    data_order = pd.read_csv("raw_data/olist_orders_dataset.csv")
+
+    return data_order    
+
+def load_data_order():
+
+    data_order = pd.read_csv("raw_data/olist_orders_dataset.csv")
+
+    return data_order    
+
+def load_data_order():
+
+    data_order = pd.read_csv("raw_data/olist_orders_dataset.csv")
+
+    return data_order    
+
+def load_data_order():
+
+    data_order = pd.read_csv("raw_data/olist_orders_dataset.csv")
+
+    return data_order                
+    
 
 
 
@@ -79,16 +133,6 @@ if page == 'Considerações iniciais':
 elif page == "Big Numbers":
 
 
-    @st.cache(show_spinner=False)
-    def load_data_order():
-
-        data_order = pd.read_csv("raw_data/olist_orders_dataset.csv")
-
-        return data_order
-
-    data1 = load_data_order()   
-
-
     st.header("Em construção")
 
     total_order_id = data1['order_id'].drop_duplicates().shape[0]
@@ -110,23 +154,3 @@ elif page == "Indicadores a nível Customer":
 elif page == "Indicadores a nível Order":
 
     st.header("Em construção")
-
-
-# @st.cache
-# def load_data_order():
-
-#     data_order = pd.read_csv("raw_data/olist_orders_dataset.csv")
-
-#     data_order_item = pd.read_csv("raw_data/olist_order_items_dataset.csv")
-
-#     data = data_order.merge(data_order_item, on = 'order_id', how = 'left')
-
-#     return data
-
-
-# data1 = load_data_order()    
-
-# st.dataframe(data1.head())
-
-
-
