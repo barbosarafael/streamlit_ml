@@ -2,7 +2,14 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 from PIL import Image
+import time
+import locale
 
+locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
+
+def split1000(s, sep=','):
+    
+   return s if len(s) <= 3 else split1000(s[:-3], sep) + sep + s[-3:]
 
 
 st.set_page_config(
@@ -28,63 +35,6 @@ Github: [barbosarafael](https://github.com/barbosarafael)
 LinkedIn: [Rafael Barbosa](https://www.linkedin.com/in/rafael-barbosa0/)
 
 """)
-
-
-@st.cache(show_spinner=False)
-
-def load_data_order():
-
-    data_order = pd.read_csv("raw_data/olist_orders_dataset.csv")
-
-    return data_order
-
-@st.cache(show_spinner=False)
-
-def load_data_customers():
-
-    data_order_customer = pd.read_csv("raw_data/olist_customers_dataset.csv")
-
-    return data_order_customer  
-
-def load_data_geolocation():
-
-    data_geolocation = pd.read_csv("raw_data/olist_geolocation_dataset.csv")
-
-    return data_geolocation    
-
-def load_data_order():
-
-    data_order = pd.read_csv("raw_data/olist_orders_dataset.csv")
-
-    return data_order    
-
-def load_data_order():
-
-    data_order = pd.read_csv("raw_data/olist_orders_dataset.csv")
-
-    return data_order    
-
-def load_data_order():
-
-    data_order = pd.read_csv("raw_data/olist_orders_dataset.csv")
-
-    return data_order    
-
-def load_data_order():
-
-    data_order = pd.read_csv("raw_data/olist_orders_dataset.csv")
-
-    return data_order    
-
-def load_data_order():
-
-    data_order = pd.read_csv("raw_data/olist_orders_dataset.csv")
-
-    return data_order                
-    
-
-
-
 if page == 'Considerações iniciais':
 
     st.markdown("## 📈 Sobre os dados")
@@ -131,16 +81,57 @@ if page == 'Considerações iniciais':
 
 
 elif page == "Big Numbers":
+    
 
+    @st.cache(show_spinner=False)
+    def load_data():
+            
+        load_order = pd.read_csv("raw_data/olist_orders_dataset.csv")
 
-    st.header("Em construção")
+        load_order_item = pd.read_csv("raw_data/olist_order_items_dataset.csv")
 
-    total_order_id = data1['order_id'].drop_duplicates().shape[0]
-    total_customer_id = data1['customer_id'].drop_duplicates().shape[0]
+        load_payment = pd.read_csv("raw_data/olist_order_payments_dataset.csv")
 
-    col1, col2 = st.columns(2)
-    col1.metric(label = "Total de pedidos", value = total_order_id, delta="1.2 °F")
-    col2.metric(label = "Total de customers", value = total_customer_id, delta = "-8%")
+        load_customer = pd.read_csv("raw_data/olist_customers_dataset.csv")
+
+        load_product = pd.read_csv("raw_data/olist_products_dataset.csv")
+
+        load_sellers = pd.read_csv("raw_data/olist_sellers_dataset.csv")
+
+        load_geolocation = pd.read_csv("raw_data/olist_geolocation_dataset.csv")
+
+        load_order_reviews = pd.read_csv("raw_data/olist_order_reviews_dataset.csv")
+        
+        load_data_translate = pd.read_csv("raw_data/product_category_name_translation.csv")
+        
+        
+        return load_order, load_order_item, load_payment, load_customer, load_product, load_sellers, load_geolocation, load_order_reviews, load_data_translate
+    
+    placeholder = st.empty()
+    
+    placeholder.info("Estamos carregando seus dados")  
+        
+    order, order_item, order_payments, customer, product, sellers, geolocation, order_reviews, translation = load_data()
+    
+    
+    placeholder.success("Dados carregados")
+    
+    st.balloons()
+    
+    time.sleep(2)
+
+    
+    placeholder.empty()
+    
+    
+    total_order_id = order['order_id'].drop_duplicates().shape[0]
+    total_customer_id = customer['customer_id'].drop_duplicates().shape[0]
+    total_seller_id = sellers['seller_id'].drop_duplicates().shape[0]
+
+    col1, col2, col3 = st.columns(3)
+    col1.metric(label = "Total de pedidos", value = split1000(str(total_order_id), sep = '.'), delta="1.2 °F")
+    col2.metric(label = "Total de customers", value = split1000(str(total_customer_id), sep = '.'), delta = "-8%")
+    col3.metric(label = "Total de sellers", value = split1000(str(total_seller_id), sep = '.'), delta = "-8%")
 
 
 elif page == "Indicadores a nível Seller":
