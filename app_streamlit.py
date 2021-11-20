@@ -3,9 +3,7 @@ import pandas as pd
 import numpy as np
 from PIL import Image
 import time
-import locale
 
-locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
 
 def split1000(s, sep=','):
     
